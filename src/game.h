@@ -513,6 +513,9 @@ class Game
 		const std::map<uint32_t, Npc*>& getNpcs() const { return npcs; }
 		const std::map<uint32_t, Monster*>& getMonsters() const { return monsters; }
 
+		std::vector<Player*> getPlayersInCast() const; //Cast
+		std::vector<Player*> getPlayersInCast(const std::string& password) const; //Cast
+
 		void addPlayer(Player* player);
 		void removePlayer(Player* player);
 

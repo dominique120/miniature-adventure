@@ -965,6 +965,14 @@ class LuaScriptInterface
 		static int32_t luaPlayerGetContainerById(lua_State* L);
 		static int32_t luaPlayerGetContainerIndex(lua_State* L);
 
+		//Cast
+		static int32_t luaPlayerIsInCast(lua_State* L);
+		static int32_t luaPlayerSetInCast(lua_State* L);
+		static int32_t luaPlayerGetPassword(lua_State* L);
+		static int32_t luaPlayerSetPassword(lua_State* L);
+		static int32_t luaPlayerGetViewews(lua_State* L);
+		static int32_t luaPlayerGetViews(lua_State* L);
+
 		// Monster
 		static int32_t luaMonsterCreate(lua_State* L);
 

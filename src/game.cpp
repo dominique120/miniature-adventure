@@ -5994,6 +5994,30 @@ void Game::removePlayer(Player* player)
 	wildcardTree.remove(lowercase_name);
 	players.erase(player->getID());
 }
+//Cast
+std::vector<Player*> Game::getPlayersInCast() const
+{
+	std::vector<Player*> playersInCast;
+	for (const auto& entry : players) {
+		Player* player = entry.second;
+		if (player->isInCast()) {
+			playersInCast.push_back(player);
+		}
+	}
+	return playersInCast;
+}
+//Cast
+std::vector<Player*> Game::getPlayersInCast(const std::string& password) const
+{
+	std::vector<Player*> playersInCast;
+	for (const auto& entry : players) {
+		Player* player = entry.second;
+		if (player->isInCast() && player->getPassword() == password) {
+			playersInCast.push_back(player);
+		}
+	}
+	return playersInCast;
+}
 
 void Game::addNpc(Npc* npc)
 {

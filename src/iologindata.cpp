@@ -63,6 +63,10 @@ bool IOLoginData::loginserverAuthentication(const std::string& name, const std::
 {
 	Database* db = Database::getInstance();
 
+	if (name.empty()) {
+		return true;
+	}
+
 	std::ostringstream query;
 	query << "SELECT `id`, `name`, `password`, `type`, `premdays`, `lastday` FROM `accounts` WHERE `name` = " << db->escapeString(name);
 
@@ -101,6 +105,10 @@ uint32_t IOLoginData::gameworldAuthentication(const std::string& accountName, co
 
 	std::ostringstream query;
 	query << "SELECT `id`, `password` FROM `accounts` WHERE `name` = " << db->escapeString(accountName);
+	//Cast
+	if (accountName.empty()) {
+		return true;
+	}
 
 	DBResult_ptr result = db->storeQuery(query.str());
 	if (!result) {
