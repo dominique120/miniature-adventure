@@ -2425,8 +2425,10 @@ void Player::autoCloseContainers(const Container* container)
 
 	for (uint32_t containerId : closeList) {
 		closeContainer(containerId);
-		if (client) {
-			client->sendCloseContainer(containerId);
+		if (clients.size() > 0) {//Cast
+			for (auto& client : clients) {
+				client->sendCloseContainer(containerId);
+			}
 		}
 	}
 }
@@ -3224,9 +3226,11 @@ void Player::updateSaleShopList(uint32_t itemId)
 		return;
 	}
 
-	if (client) {
-		client->sendSaleItemList(shopItemList);
-	}
+	if (clients.size() > 0) {//Cast
+		for (auto& client : clients) {
+			client->sendSaleItemList(shopItemList);
+		}
+		}
 }
 
 bool Player::hasShopItemForSale(uint32_t itemId, uint8_t subType) const
@@ -3990,10 +3994,12 @@ void Player::addUnjustifiedDead(const Player* attacked)
 		return;
 	}
 
-	if (client) {
+	if (clients.size() > 0) {//Cast
 		std::ostringstream ss;
 		ss << "Warning! The murder of " << attacked->getName() << " was not justified.";
-		client->sendTextMessage(MESSAGE_EVENT_ADVANCE, ss.str());
+		for (auto& client : clients) {//Cast
+			client->sendTextMessage(MSG_EVENT_ADVANCE, ss.str());
+		}
 	}
 
 	skullTicks += g_config.getNumber(ConfigManager::FRAG_TIME);
@@ -4090,6 +4096,23 @@ bool Player::hasLearnedInstantSpell(const std::string& name) const
 		}
 	}
 	return false;
+}
+//Cast
+void Player::setInCast(bool value)
+{
+	if (inCast == value)
+		return;
+
+	inCast = value;
+	if (!inCast) {
+		while (clients.size() > 1) {
+			clients.back()->disconnect();
+			clients.pop_back();
+		}
+	}
+	else {
+		sendChannel(CHANNEL_CAST, "Live cast", nullptr, nullptr);
+	}
 }
 
 bool Player::isInWar(const Player* player) const
@@ -4585,12 +4608,14 @@ void Player::onModalWindowHandled(uint32_t modalWindowId)
 
 void Player::sendModalWindow(const ModalWindow& modalWindow)
 {
-	if (!client) {
+	if (clients.size() == 0) {//Cast
 		return;
 	}
 
 	modalWindows.push_front(modalWindow.id);
-	client->sendModalWindow(modalWindow);
+	for (auto& client : clients) {//Cast
+		client->sendModalWindow(modalWindow);
+	}
 }
 
 void Player::clearModalWindows()
@@ -4685,8 +4710,10 @@ void Player::sendClosePrivate(uint16_t channelId)
 		g_chat.removeUserFromChannel(*this, channelId);
 	}
 
-	if (client) {
-		client->sendClosePrivate(channelId);
+	if (clients.size() > 0) {//Cast
+		for (auto& client : clients) {
+			client->sendClosePrivate(channelId);
+		}
 	}
 }
 
