@@ -733,6 +733,7 @@ class Player : public Creature, public Cylinder
 				for (auto& client : clients) {
 					client->sendUpdateTileItem(tile, pos, tile->getClientIndexOfThing(this, newitem), newitem);
 				}
+			}
 		}
 		void sendRemoveTileThing(const Position& pos, uint32_t stackpos) {
 			if (clients.size() > 0) {//Cast
