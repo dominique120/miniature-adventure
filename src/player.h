@@ -733,6 +733,7 @@ class Player : public Creature, public Cylinder
 				for (auto& client : clients) {
 					client->sendUpdateTileItem(tile, pos, tile->getClientIndexOfThing(this, newitem), newitem);
 				}
+			}
 		}
 		void sendRemoveTileThing(const Position& pos, uint32_t stackpos) {
 			if (clients.size() > 0) {//Cast
@@ -753,21 +754,21 @@ class Player : public Creature, public Cylinder
 				if (clients.size() > 0) {//Cast
 					for (auto& client : clients) {
 						client->sendChannelMessage(author, text, type, channel);
-					}
+				}
 			}
 		}
 		void sendChannelEvent(uint16_t channelId, const std::string& playerName, ChannelEvent_t channelEvent) {
 				if (clients.size() > 0) {//Cast
 					for (auto& client : clients) {
 						client->sendChannelEvent(channelId, playerName, channelEvent);
-					}
+				}
 			}
 		}
 		void sendCreatureAppear(const Creature* creature, const Position& pos, bool isLogin) {
 				if (clients.size() > 0) {//Cast
 					for (auto& client : clients) {
 						client->sendAddCreature(creature, pos, creature->getTile()->getClientIndexOfThing(this, creature), isLogin);
-					}
+				}
 			}
 		}
 		void sendCreatureMove(const Creature* creature, const Position& newPos, uint32_t newStackPos, const Position& oldPos, uint32_t oldStackPos, bool teleport) {
@@ -788,7 +789,7 @@ class Player : public Creature, public Cylinder
 				if (clients.size() > 0) {//Cast
 					for (auto& client : clients) {
 						client->sendCreatureSay(creature, type, text, pos);
-					}
+				}
 			}
 		}
 		void sendCreatureSquare(const Creature* creature, SquareColor_t color) {
