@@ -847,7 +847,7 @@ public:
 			}
 		}
 	}
-//}//Edit here
+};//Edit here
 		void sendCreatureLight(const Creature* creature) {
 			if (clients.size() > 0) {//Cast
 				for (auto& client : clients) {
