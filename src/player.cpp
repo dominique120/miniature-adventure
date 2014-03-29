@@ -936,7 +936,7 @@ bool Player::getStorageValue(const uint32_t key, int32_t& value) const
 //Cast
 bool Player::canSee(const Position& pos) const
 {
-	if (clients.size() == 0)
+	if (clients.size() == 0)} {
 		return false;
 	}
 	return clients.front()->canSee(pos);
